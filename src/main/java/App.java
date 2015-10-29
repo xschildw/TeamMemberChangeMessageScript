@@ -24,7 +24,7 @@ public class App {
     private final static String STAGING_AUTH = "https://auth-staging.prod.sagebase.org/auth/v1";
     private final static String STAGING_REPO = "https://repo-staging.prod.sagebase.org/repo/v1";
     private final static String STAGING_FILE = "https://file-staging.prod.sagebase.org/file/v1";
-    private static final int BATCH_SIZE = 100;
+    private static final int BATCH_SIZE = 1000;
 
     public static void main(String[] args) {
         if (args.length != 4) printUsage();
@@ -61,7 +61,7 @@ public class App {
             changeMessage.setObjectType(ObjectType.TEAM_MEMBER);
             changeMessage.setObjectEtag("etag");
             changeMessage.setChangeType(ChangeType.UPDATE);
-            System.out.println(changeMessage.toString());
+            //System.out.println(changeMessage.toString());
             list.add(changeMessage);
 
             if (list.size() == BATCH_SIZE) {
@@ -81,6 +81,7 @@ public class App {
         ChangeMessages batch = new ChangeMessages();
         batch.setList(list);
         adminSynapse.createOrUpdateChangeMessages(batch);
+        System.out.println("Created or updated "+list.size()+" team member change messages.");
     }
 
     private static void printUsage() {
