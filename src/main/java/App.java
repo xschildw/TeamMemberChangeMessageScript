@@ -1,5 +1,4 @@
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,18 +49,16 @@ public class App {
         }
     }
 
-    private static void process(SynapseAdminClient adminSynapse, String filePath) throws IOException, SynapseException {
+	private static void process(SynapseAdminClient adminSynapse, String filePath) throws IOException, SynapseException {
         CsvReader reader = new CsvReader(filePath);
         List<ChangeMessage> list = new ArrayList<ChangeMessage>();
         while (reader.readRecord()) {
             ChangeMessage changeMessage = new ChangeMessage();
             changeMessage.setTimestamp(new Date());
-            changeMessage.setParentId(reader.get(0));
-            changeMessage.setObjectId(reader.get(1));
-            changeMessage.setObjectType(ObjectType.TEAM_MEMBER);
+            changeMessage.setObjectId(reader.get(0));
             changeMessage.setObjectEtag("etag");
+            changeMessage.setObjectType(ObjectType.PRINCIPAL);
             changeMessage.setChangeType(ChangeType.UPDATE);
-            //System.out.println(changeMessage.toString());
             list.add(changeMessage);
 
             if (list.size() == BATCH_SIZE) {
@@ -81,7 +78,7 @@ public class App {
         ChangeMessages batch = new ChangeMessages();
         batch.setList(list);
         adminSynapse.createOrUpdateChangeMessages(batch);
-        System.out.println("Created or updated "+list.size()+" team member change messages.");
+        System.out.println("Created or updated "+list.size()+" PRINCIPAL change messages.");
     }
 
     private static void printUsage() {
