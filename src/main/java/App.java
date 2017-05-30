@@ -10,6 +10,7 @@ import org.sagebionetworks.client.SynapseAdminClient;
 import org.sagebionetworks.client.SynapseAdminClientImpl;
 import org.sagebionetworks.client.exceptions.SynapseException;
 import org.sagebionetworks.repo.model.AccessApproval;
+import org.sagebionetworks.repo.model.AccessRequirement;
 import org.sagebionetworks.repo.model.FileEntity;
 import org.sagebionetworks.repo.model.ObjectType;
 import org.sagebionetworks.repo.model.message.ChangeMessage;
@@ -63,7 +64,9 @@ public class App {
         while (reader.readRecord()) {
         	lineRead++;
         	try {
-        		System.out.println("Updated "+adminSynapse.updateVersion(reader.get(0)));
+        		Long id = Long.valueOf(reader.get(0));
+        		AccessRequirement arBefore = adminSynapse.getAccessRequirement(id);
+        		AccessRequirement arAfter = adminSynapse.updateAccessRequirement(arBefore);
         		numberOfRecords++;
         	} catch (SynapseException e) {
         		e.printStackTrace();
