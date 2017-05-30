@@ -111,6 +111,6 @@
 		</plugins>
 	</build>
 	<properties>
-		<synapse.version>2017-05-16-2650-219b6d0</synapse.version>
+		<synapse.version>182.0-36-gc4b4dbe</synapse.version>
 	</properties>
 </project>

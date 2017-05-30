@@ -67,6 +67,7 @@ public class App {
         		Long id = Long.valueOf(reader.get(0));
         		AccessRequirement arBefore = adminSynapse.getAccessRequirement(id);
         		AccessRequirement arAfter = adminSynapse.updateAccessRequirement(arBefore);
+        		System.out.println(String.format("Before:\n%s\nAfter:\n%s\n\n", arBefore.toString(), arAfter.toString()));
         		numberOfRecords++;
         	} catch (SynapseException e) {
         		e.printStackTrace();
